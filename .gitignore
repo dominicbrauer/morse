@@ -1,52 +1,32 @@
-# Prerequisites
-*.d
+# Build artifacts
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
+# Output binaries
 *.exe
 *.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+*.o
+*.obj
+*.so
+*.a
+*.lib
+*.dll
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# Visual Studio Code settings
+.vscode/
+*.code-workspace
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Backup/temporary files
+*~
+*.swp
+.DS_Store
+
+# Ninja or other build systems (optional)
+build-*/        # alternative build dirs (e.g., build-debug, build-release)
+compile_commands.json
+
+# Logs
+*.log
