@@ -20,3 +20,6 @@ Tabelle: https://dk0ru.github.io/downloads/m21-morse-code.pdf
 - Buchstaben trennt 1x Space
 - Wörter trennt 3x Space
 - \n wird ignoriert
+
+## Funktional
+- per Pipe '|' soll Text dem Programm übergeben werden können
