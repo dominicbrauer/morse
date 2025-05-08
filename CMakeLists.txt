@@ -11,4 +11,4 @@ include_directories(include)
 file(GLOB SOURCES "src/*.c")
 
 # Create executable
-add_executable(morse_built src/main.c src/utils.c)
+add_executable(morse_built ${SOURCES})
