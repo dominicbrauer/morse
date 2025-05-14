@@ -1,3 +1,9 @@
+# Doxygen
+doc/
+
+# Executable
+morse
+
 # Build artifacts
 /build/
 /CMakeFiles/
