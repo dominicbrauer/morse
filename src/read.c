@@ -8,10 +8,10 @@
  * @param codes array where the codes are parsed into
  * @param size counts the eventual entries in codes
  */
-void readCSV(char **codes, size_t *size) {
+void readCSV(char **codes, size_t *codes_size) {
   char lines[128][16];
-  int line_count = 0;
-  int code_count = 0;
+  size_t line_count = 0;
+  size_t code_count = 0;
   const char *delimiter = "\t";
 
   FILE *file = fopen("resources/morse_table.csv", "r");
@@ -31,7 +31,7 @@ void readCSV(char **codes, size_t *size) {
     char *token = strtok(lines[line_count], delimiter);
 
     while (token != NULL) {
-      codes[code_count] = token;
+      codes[code_count] = strdup(token);
       code_count++;
 
       token = strtok(NULL, delimiter);  // Pass NULL to continue tokenizing
@@ -41,7 +41,7 @@ void readCSV(char **codes, size_t *size) {
     if (line_count >= 128) break;
   }
 
-  if (size) *size = code_count;
+  if (codes_size) *codes_size = code_count;
 
   fclose(file);
 

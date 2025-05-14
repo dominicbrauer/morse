@@ -4,27 +4,48 @@
 #include <ctype.h>
 #include "read.h"
 
+const char SPACE = ' ';
+const char UNKNOWN_CHAR = '*';
+
 /**
  * Encodes text -> morse.
- * @return given text in morse code
+ * Note that text will be overwriten by
+ * the the morse sequence.
+ * @return given text in ASCII
  */
-void encode(char *text) {
-  size_t size;
+void encode(char text[]) {
+  size_t codes_size;
   char *codes[256];
-  readCSV(codes, &size);
+  readCSV(codes, &codes_size);
 
-  size_t testSize = 0;
-  for (int i = 0; codes[i] != NULL; i++) {
-    testSize++;
-  }
-  
-  // Capitalize all letters
+  char encoded[1024] = {'\0'};
+
   for (int i = 0; text[i] != '\0'; i++) {
-    text[i] = toupper((unsigned char)text[i]);
+    // Handle space char in text
+    if (text[i] == SPACE) {
+      strcat(encoded, (char[]){SPACE, SPACE, SPACE, '\0'});
+      continue;
+    }
+    // Handle letters
+    for (int j = 0; j < codes_size; j++) {
+      if (toupper((unsigned char)text[i]) == codes[j][0]) {
+        strcat(encoded, codes[j+1]);
+        break;
+      }
+      // Unknown character
+      if (j == codes_size - 1) {
+        strcat(encoded, (char[]){UNKNOWN_CHAR, '\0'});
+      }
+    }
+    // Handle if space is needed in morse
+    if (text[i+1] != '\0' && text[i+1] != SPACE) {
+      strcat(encoded, (char[]){SPACE, '\0'});
+    }
   }
 
-  for (int i = 0; i < size; i++) {
-    printf("%s\n", codes[i]);
-  }
-  
+  // strcpy(text, encoded);
+
+  printf("#%s#\n", encoded);
+
+  return;
 }

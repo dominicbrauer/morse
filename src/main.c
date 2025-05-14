@@ -10,11 +10,11 @@ int main(int argc, char *argv[]) {
     printf("%s\n", argv[1]);
   }
 
-  char text[] = "hallo bubi 123 -+ Hgfs.";
+  char text[] = "hallo Welt $ mein Name +4 ist bubi9";
 
   encode(text);
 
-  printf("%s\n", text);
+  // printf("%s\n", text);
 
   return EXIT_SUCCESS;
 
