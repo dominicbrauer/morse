@@ -14,39 +14,45 @@
  * @param given text in ASCII
  * @return text in morse
  */
-void encode(char *text, char **codes, size_t codes_size) {
-  char encoded[1] = {'\0'};
+void encode(char **text, char **codes, size_t codes_size) {
+  char *encoded = malloc(sizeof(char));
+  encoded[0] = '\0';
 
-  // memory allocation missing here
-
-  for (int i = 0; text[i] != '\0'; i++) {
+  for (int i = 0; (*text)[i] != '\0'; i++) {
     // Handle space char in text
-    if (text[i] == SPACE) {
+    if ((*text)[i] == SPACE) {
+      encoded = realloc(encoded, (strlen(encoded) + 1 + 4) * sizeof(char));
       strcat(encoded, (char[]){SPACE, SPACE, SPACE, '\0'});
       continue;
     }
+
     // Handle letters
     for (int j = 0; j < codes_size; j++) {
-      if (toupper((unsigned char)text[i]) == codes[j][0]) {
+      if (toupper((unsigned char)(*text)[i]) == codes[j][0]) {
+        encoded = realloc(encoded, (strlen(encoded) + 1 + strlen(codes[j+1])) * sizeof(char));
         strcat(encoded, codes[j+1]);
         break;
       }
       // Unknown character
       if (j == codes_size - 1) {
+        encoded = realloc(encoded, (strlen(encoded) + 1 + 2) * sizeof(char));
         strcat(encoded, (char[]){UNKNOWN_CHAR, '\0'});
       }
     }
+
     // Handle if space is needed in morse
-    if (text[i+1] != '\0' && text[i+1] != SPACE) {
+    if ((*text)[i+1] != '\0' && (*text)[i+1] != SPACE) {
+      encoded = realloc(encoded, (strlen(encoded) + 1 + 2) * sizeof(char));
       strcat(encoded, (char[]){SPACE, '\0'});
     }
   }
 
-  strcpy(text, encoded);
+  *text = NULL;
+  *text = malloc((strlen(encoded) + 1) * sizeof(char));
+  strcpy(*text, encoded);
 
-  // strcpy(text, encoded);
-
-  // printf("#%s#\n", encoded);
+  free(encoded);
 
   return;
+
 }
