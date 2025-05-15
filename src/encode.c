@@ -3,17 +3,18 @@
 #include <string.h>
 #include <ctype.h>
 #include "read.h"
+#include "encode.h"
+#include "consts.h"
 
-const char SPACE = ' ';
-const char UNKNOWN_CHAR = '*';
 
 /**
  * Encodes text -> morse.
  * Note that text will be overwriten by
  * the the morse sequence.
- * @return given text in ASCII
+ * @param given text in ASCII
+ * @return text in morse
  */
-void encode(char text[]) {
+void encode(char text[1024]) {
   size_t codes_size;
   char *codes[256];
   readCSV(codes, &codes_size);
@@ -43,9 +44,11 @@ void encode(char text[]) {
     }
   }
 
+  strcpy(text, encoded);
+
   // strcpy(text, encoded);
 
-  printf("#%s#\n", encoded);
+  // printf("#%s#\n", encoded);
 
   return;
 }

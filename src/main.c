@@ -10,11 +10,13 @@ int main(int argc, char *argv[]) {
     printf("%s\n", argv[1]);
   }
 
-  char text[] = "hallo Welt $ mein Name +4 ist bubi9";
+  char text[1024] = "hallo Welt $ mein Name +4 ist bubi9";
 
   encode(text);
 
-  // printf("%s\n", text);
+  decode(text);
+
+  printf("%s\n", text);
 
   return EXIT_SUCCESS;
 
