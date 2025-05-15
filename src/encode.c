@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "read.h"
 #include "encode.h"
 #include "consts.h"
-
 
 /**
  * Encodes text -> morse.
@@ -22,7 +20,7 @@ void encode(char **text, char **codes, size_t codes_size) {
     // Handle space char in text
     if ((*text)[i] == SPACE) {
       encoded = realloc(encoded, (strlen(encoded) + 1 + 4) * sizeof(char));
-      strcat(encoded, (char[]){SPACE, SPACE, SPACE, '\0'});
+      strcat(encoded, TRIPLE_SPACE_NT);
       continue;
     }
 

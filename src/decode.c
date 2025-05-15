@@ -2,34 +2,36 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "read.h"
 #include "decode.h"
 #include "consts.h"
 
 /**
- * Encodes text -> morse.
- * Note that text will be overwriten
- * by the morse sequence.
- * @param given text in ASCII
- * @return text in morse
+ * 
  */
-void decode(char morse[1024]) {
-  // size_t codes_size;
-  // char *codes[256];
-  // readCSV(codes, &codes_size);
+void decode(char **morse, char **codes, size_t codes_size) {
+  char *decoded = malloc(sizeof(char));
+  decoded[0] = '\0';
 
-  // size_t decoded_size = 1;
+  char **morse_words = malloc(sizeof(char *));
+  size_t morse_word_count = 0;
 
-  // char *decoded = malloc(decoded_size);
+  // this not work
+  char *token = strtok(*morse, TRIPLE_SPACE);
 
-  // decoded[0] = '\0';
-  // decoded_size++;
+  while (token != NULL) {
+    morse_words[morse_word_count] = malloc((strlen(token) + 1) * sizeof(char));
+    morse_words[morse_word_count] = strdup(token);
+    morse_word_count++;
 
-  // decoded = realloc(decoded, decoded_size);
+    morse_words = realloc(morse_words, (morse_word_count + 1) * sizeof(char *));
 
-  // printf("%s\n", morse);
+    token = strtok(NULL, TRIPLE_SPACE);  // Pass NULL to continue tokenizing
+  }
 
-  // free(decoded);
+  for (int i = 0; i < morse_word_count; i++) {
+    printf("%s\n", morse_words[i]);
+  }
 
   return;
+
 }

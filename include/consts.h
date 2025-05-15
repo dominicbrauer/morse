@@ -2,6 +2,8 @@
 #define CONSTS_H
 
 extern const char SPACE;
+extern const char TRIPLE_SPACE[];
+extern const char TRIPLE_SPACE_NT[];
 extern const char UNKNOWN_CHAR;
 
 #endif
