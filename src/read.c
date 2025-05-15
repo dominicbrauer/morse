@@ -8,39 +8,37 @@
  * @param codes array where the codes are parsed into
  * @param size counts the eventual entries in codes
  */
-void readCSV(char **codes, size_t *codes_size) {
-  char lines[128][16];
-  size_t line_count = 0;
+void readCSV(char ***codes, size_t *codes_size) {
   size_t code_count = 0;
+
+  *codes = malloc(sizeof(char *));
+  (*codes)[0] = malloc(16 * sizeof(char));
+  
   const char *delimiter = "\t";
-
+  
   FILE *file = fopen("resources/morse_table.csv", "r");
-
+  
   if (file == NULL) {
     perror("Failed loading file!");
     exit(EXIT_FAILURE);
   }
-  
-  while (fgets(lines[line_count], 16, file)) {
-    // Remove the newline character at the end of the line if it's there
-    size_t len = strlen(lines[line_count]);
-    if (len > 0 && lines[line_count][len - 1] == '\n') {
-      lines[line_count][len - 1] = '\0';
-    }
-    
-    char *token = strtok(lines[line_count], delimiter);
 
+  char line[16];
+  while (fgets(line, 16, file)) {
+    // Remove the newline character at the end of the line if it's there
+    char *token = strtok(line, delimiter);
+    
     while (token != NULL) {
-      codes[code_count] = strdup(token);
+      (*codes)[code_count] = strdup(token);
       code_count++;
 
-      token = strtok(NULL, delimiter);  // Pass NULL to continue tokenizing
+      *codes = realloc(*codes, (code_count + 1) * sizeof(char *));
+      (*codes)[code_count] = malloc(16 * sizeof(char));
+      
+      token = strtok(strtok(NULL, "\n"), delimiter);  // Pass NULL to continue tokenizing
     }
-
-    line_count++;
-    if (line_count >= 128) break;
   }
-
+  
   if (codes_size) *codes_size = code_count;
 
   fclose(file);

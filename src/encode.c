@@ -14,12 +14,10 @@
  * @param given text in ASCII
  * @return text in morse
  */
-void encode(char text[1024]) {
-  size_t codes_size;
-  char *codes[256];
-  readCSV(codes, &codes_size);
+void encode(char *text, char **codes, size_t codes_size) {
+  char encoded[1] = {'\0'};
 
-  char encoded[1024] = {'\0'};
+  // memory allocation missing here
 
   for (int i = 0; text[i] != '\0'; i++) {
     // Handle space char in text
