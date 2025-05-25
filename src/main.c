@@ -3,6 +3,7 @@
 #include <string.h>
 #include "read.h"
 #include "consts.h"
+#include "encode.h"
 #include "decode.h"
 
 int main(int argc, char *argv[]) {
@@ -11,8 +12,8 @@ int main(int argc, char *argv[]) {
 		printf("%s\n", argv[1]);
 	}
 
-	// char *text = "hallo Welt $ mein @ Name +4 ist bubi9";
-	char *text = ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --..   .--.-";
+	char *input = "TEST !1";
+	// char *text = ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --..   .--.-";
 
 	MorseCode *morseTable = NULL;
 	size_t morseTableSize = 0;
@@ -23,11 +24,13 @@ int main(int argc, char *argv[]) {
 	// 	printf(">%s<\n", morseTable[i].morse);
 	// }
 
-	char *output;
-	decode(text, output, morseTable, morseTableSize);
+	char *output = malloc(1024);
+	encode(input, output, morseTable, morseTableSize);
+	// decode(input, output, morseTable, morseTableSize);
 	printf(">%s<\n", output);
 
 	free(morseTable);
+	free(output);
 
 	return EXIT_SUCCESS;
 

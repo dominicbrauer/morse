@@ -30,7 +30,7 @@ char morseToChar(const char *code, const MorseCode *morseTable, const size_t mor
  * @param morseTable the table containing the translations
  * @param morseTableSize the size of morseTable
  */
-void decode(const char *input, char *output, const MorseCode *morseTable, const size_t morseTableSize) {
+void decode(const char *input, char *output, const MorseCode morseTable[], const size_t morseTableSize) {
 	char buffer[10]; // temporary memory for morse code
 	int outIndex = 0, bufIndex = 0;
 	int spaceCount = 0;

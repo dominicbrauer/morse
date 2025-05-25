@@ -1,6 +1,8 @@
+#include "consts.h"
+
 #ifndef ENCODE_H
 #define ENCODE_H
 
-// void encode(char **text, char **codes, size_t codes_size);
+void encode(const char *input, char *output, const MorseCode morseTable[], const size_t morseTableSize);
 
 #endif

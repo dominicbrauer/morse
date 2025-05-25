@@ -1,4 +1,3 @@
-/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,47 +5,54 @@
 #include "encode.h"
 #include "consts.h"
 
+/**
+ * Encodes plain text into a morse sequence.
+ * @param input the text to be encoded
+ * @param output the string pointer where the result is written to
+ * @param morseTable the table containing the translations
+ * @param morseTableSize the size of morseTable
+ */
+void encode(const char *input, char *output, const MorseCode morseTable[], const size_t morseTableSize) {
+	output[0] = '\0'; // Clear the output buffer
 
-void encode(char **text, char **codes, size_t codes_size) {
-	char *encoded = malloc(sizeof(char));
-	encoded[0] = '\0';
+	int i = 0;
+	while (input[i] != '\0') {
+		char c = input[i];
 
-	for (int i = 0; (*text)[i] != '\0'; i++) {
-		// Handle space char in text
-		if ((*text)[i] == SPACE) {
-			encoded = realloc(encoded, (strlen(encoded) + 1 + 4) * sizeof(char));
-			strcat(encoded, TRIPLE_SPACE_NT);
+		// Handle spaces between words
+		if (c == SPACE) {
+			// Check if previous character wasn't also a space
+			// to avoid inserting multiple word gaps
+			if (i == 0 || input[i - 1] != SPACE) {
+				strcat(output, TRIPLE_SPACE);  // 3 spaces between words
+			}
+			i++;
 			continue;
 		}
 
-		// Handle letters
-		for (int j = 0; j < codes_size; j++) {
-			if (toupper((unsigned char)(*text)[i]) == codes[j][0]) {
-				encoded = realloc(encoded, (strlen(encoded) + 1 + strlen(codes[j+1])) * sizeof(char));
-				strcat(encoded, codes[j+1]);
+		// Convert to uppercase
+		if (c >= 'a' && c <= 'z') {
+			c -= 32;
+		}
+
+		int found = 0;
+		for (size_t j = 0; j < morseTableSize; j++) {
+			if (morseTable[j].letter == c) {
+				strcat(output, morseTable[j].morse);
+				found = 1;
 				break;
 			}
-			// Unknown character
-			if (j == codes_size - 1) {
-				encoded = realloc(encoded, (strlen(encoded) + 1 + 2) * sizeof(char));
-				strcat(encoded, (char[]){UNKNOWN_CHAR, '\0'});
-			}
 		}
 
-		// Handle if space is needed in morse
-		if ((*text)[i+1] != '\0' && (*text)[i+1] != SPACE) {
-			encoded = realloc(encoded, (strlen(encoded) + 1 + 2) * sizeof(char));
-			strcat(encoded, (char[]){SPACE, '\0'});
+		if (!found) {
+			strcat(output, (char[]){ UNKNOWN_CHAR, '\0' });
 		}
+
+		// Look ahead: if next character is a letter (not space or end), add 1 space
+		if (input[i + 1] != '\0' && input[i + 1] != SPACE) {
+			strcat(output, " ");
+		}
+
+		i++;
 	}
-
-	*text = NULL;
-	*text = malloc((strlen(encoded) + 1) * sizeof(char));
-	strcpy(*text, encoded);
-
-	free(encoded);
-
-	return;
-
 }
-*/
