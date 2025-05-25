@@ -20,7 +20,7 @@ char morseToChar(const char *code, const MorseCode *morseTable, const size_t mor
 			return morseTable[i].letter;
 		}
 	}
-	return UNKNOWN_CHAR; // Unknown character
+	return UNKNOWN_CHAR; // unknown character
 }
 
 /**
@@ -56,8 +56,7 @@ void decode(const char *input, char *output, const MorseCode morseTable[], const
 				spaceCount = 0;
 			}
 
-			if (c == '\0')
-				break;
+			if (c == '\0') break;
 		}
 	}
 

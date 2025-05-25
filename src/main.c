@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
 	char *input_filename = NULL;
 	char *output_filename = NULL;
 
+	// getopt options
 	static struct option long_options[] = {
 		{"help", no_argument, false, 'h'},
 		{"programmer-info", no_argument, false, 0},
@@ -50,69 +51,58 @@ int main(int argc, char *argv[]) {
 					break;
 				}
 				else if (strcmp("programmer-info", long_options[option_index].name) == 0) {
-					// print info
+					printf("%s", INFO_JSON);
 					return EXIT_SUCCESS;
 				}
 			default:
 				fprintf(stderr, "Usage: %s [-e|--encode] [-d|--decode] [inputfile] [-o|--output file]\n", argv[0]);
-				return 1;
+				return EXIT_FAILURE;
 		}
 	}
 
 	if (encode_flag && decode_flag) {
 		fprintf(stderr, "Error: Cannot specify both --encode and --decode.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
-	
-	int mode = decode_flag ? true : false; // Default to encode (0) if nothing set
 
-	// Check for input file (positional argument after flags)
-	if (optind < argc) {
-		input_filename = argv[optind];
-	}
+	int mode = decode_flag ? true : false;
+
+	if (optind < argc) input_filename = argv[optind];
 
 	FILE *in = input_filename ? fopen(input_filename, "r") : stdin;
 	if (!in) {
 		perror("Error opening input file");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	FILE *out = output_filename ? fopen(output_filename, "w") : stdout;
 	if (!out) {
-		perror("Error opening output file");
+		perror("Error opening output file!");
 		if (in != stdin) fclose(in);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	MorseCode *morseTable = NULL;
 	size_t morseTableSize = 0;
 	readCSV(&morseTable, &morseTableSize);
-	
+
 	char buffer[1024];
 	char *output = malloc(1024);
 	while (fgets(buffer, sizeof(buffer), in)) {
-		buffer[strcspn(buffer, "\n")] = '\0'; // Remove newline
+		buffer[strcspn(buffer, "\n")] = '\0';
 		if (mode == 0) {
 			encode(buffer, output, morseTable, morseTableSize, wordspacer);
-			if (out == stdout) printf("%s\n", output);
-			else {
-				fprintf(out, "%s ", output);
-				fprintf(out, "\n");
-			}
+			fprintf(out, "%s\n", output);
 		} else {
 			decode(buffer, output, morseTable, morseTableSize);
-			if (out == stdout) printf("%s\n", output);
-			else {
-				fprintf(out, "%s ", output);
-				fprintf(out, "\n");
-			}
+			fprintf(out, "%s\n", output);
 		}
 	}
-	
 
 	if (in != stdin) fclose(in);
 	if (out != stdout) fclose(out);
 
+	// avoid memory leaks
 	free(morseTable);
 	free(output);
 
