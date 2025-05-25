@@ -7,8 +7,8 @@ extern const char TRIPLE_SPACE_NT[];
 extern const char UNKNOWN_CHAR;
 
 typedef struct {
-  const char *morse;
-  char letter;
+	const char *morse;
+	char letter;
 } MorseCode;
 
 #endif

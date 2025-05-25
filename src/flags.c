@@ -4,7 +4,7 @@
 #include "flags.h"
 
 const char *help_text =
-  "Usage: ./morse [OPTIONS]\n"
-  "Options:\n"
-  "  -h, --help     Show this help message and exit\n"
+	"Usage: ./morse [OPTIONS]\n"
+	"Options:\n"
+	"  -h, --help     Show this help message and exit\n"
 ;
