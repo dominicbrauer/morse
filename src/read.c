@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "read.h"
 #include "consts.h"
 
@@ -18,11 +19,10 @@ void readCSV(MorseCode **morseTable, size_t *morseTableSize) {
 	}
 
 	char line[16];
-	const char *delimiter = "\t";
 	while (fgets(line, 16, file)) {
 		*morseTable = realloc(*morseTable, (*morseTableSize + 1) * sizeof(MorseCode));
 
-		char *token = strtok(line, delimiter);
+		char *token = strtok(line, "\t");
 		(*morseTable)[*morseTableSize].letter = token[0];
 
 		token = strtok(NULL, "\n");

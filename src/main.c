@@ -3,7 +3,6 @@
 #include <string.h>
 #include "read.h"
 #include "consts.h"
-#include "encode.h"
 #include "decode.h"
 
 int main(int argc, char *argv[]) {
@@ -13,16 +12,20 @@ int main(int argc, char *argv[]) {
 	}
 
 	// char *text = "hallo Welt $ mein @ Name +4 ist bubi9";
-	char *text = ".... .- .-.. .-.. ---   .-- . .-.. -   *";
+	char *text = ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --..   .--.-";
 
 	MorseCode *morseTable = NULL;
 	size_t morseTableSize = 0;
 	readCSV(&morseTable, &morseTableSize);
 
-	for (int i = 0; i < morseTableSize; i++) {
-		printf("> %c\n", morseTable[i].letter);
-		printf("> %s\n", morseTable[i].morse);
-	}
+	// for (int i = 0; i < morseTableSize; i++) {
+	// 	printf(">%c<\n", morseTable[i].letter);
+	// 	printf(">%s<\n", morseTable[i].morse);
+	// }
+
+	char *output;
+	decode(text, output, morseTable, morseTableSize);
+	printf(">%s<\n", output);
 
 	free(morseTable);
 

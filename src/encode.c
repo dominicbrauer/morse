@@ -1,3 +1,4 @@
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,13 +6,7 @@
 #include "encode.h"
 #include "consts.h"
 
-/**
- * Encodes text -> morse.
- * Note that text will be overwriten by
- * the the morse sequence.
- * @param given text in ASCII
- * @return text in morse
- */
+
 void encode(char **text, char **codes, size_t codes_size) {
 	char *encoded = malloc(sizeof(char));
 	encoded[0] = '\0';
@@ -54,3 +49,4 @@ void encode(char **text, char **codes, size_t codes_size) {
 	return;
 
 }
+*/
