@@ -2,7 +2,7 @@
 #define CONSTS_H
 
 extern const char SPACE;
-extern const char TRIPLE_SPACE[];
+extern const char TRIPLE_SPACE[4];
 extern const char UNKNOWN_CHAR;
 
 typedef struct {

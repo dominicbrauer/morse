@@ -12,7 +12,7 @@
  * @param morseTable the table containing the translations
  * @param morseTableSize the size of morseTable
  */
-void encode(const char *input, char *output, const MorseCode morseTable[], const size_t morseTableSize) {
+void encode(const char *input, char *output, const MorseCode morseTable[], const size_t morseTableSize, char wordspacer[]) {
 	output[0] = '\0'; // Clear the output buffer
 
 	int i = 0;
@@ -24,7 +24,7 @@ void encode(const char *input, char *output, const MorseCode morseTable[], const
 			// Check if previous character wasn't also a space
 			// to avoid inserting multiple word gaps
 			if (i == 0 || input[i - 1] != SPACE) {
-				strcat(output, TRIPLE_SPACE);  // 3 spaces between words
+				strcat(output, wordspacer);  // 3 spaces between words
 			}
 			i++;
 			continue;
