@@ -19,18 +19,12 @@ int main(int argc, char *argv[]) {
 	size_t morseTableSize = 0;
 	readCSV(&morseTable, &morseTableSize);
 
-	// char **codes;
-	// size_t codes_size;
-	// readCSV(&codes, &codes_size);
+	for (int i = 0; i < morseTableSize; i++) {
+		printf("> %c\n", morseTable[i].letter);
+		printf("> %s\n", morseTable[i].morse);
+	}
 
-	// encode(&text, codes, codes_size);
-	// decode(&text, codes, codes_size);
-
-	// free(codes);
-
-	// printf("#%s#\n", text);
-
-	// free(text);
+	free(morseTable);
 
 	return EXIT_SUCCESS;
 

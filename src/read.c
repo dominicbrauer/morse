@@ -10,8 +10,6 @@
  * @param morseTableSize starter size of morseTable
  */
 void readCSV(MorseCode **morseTable, size_t *morseTableSize) {
-	*morseTable = malloc(sizeof(MorseCode));
-	
 	FILE *file = fopen("resources/morse_table.csv", "r");
 	
 	if (file == NULL) {
@@ -27,8 +25,8 @@ void readCSV(MorseCode **morseTable, size_t *morseTableSize) {
 		char *token = strtok(line, delimiter);
 		(*morseTable)[*morseTableSize].letter = token[0];
 
-		token = strtok(strtok(NULL, "\n"), delimiter);
-		(*morseTable)[*morseTableSize].morse = token;
+		token = strtok(NULL, "\n");
+		(*morseTable)[*morseTableSize].morse = strdup(token);
 
 		(*morseTableSize)++;
 	}
